@@ -18,6 +18,7 @@ namespace HsumChaint.API.Controllers
 
 
         [HttpPost]
+        [Route("AddUser")]
         public async Task<IActionResult> GetAddUser(UserDto reqModel)
         {
             var user = await _userService.AddUser(reqModel);

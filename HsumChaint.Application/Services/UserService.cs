@@ -1,19 +1,23 @@
 ﻿using HsumChaint.Application.DTOs;
 using HsumChaint.Application.ServiceInterfaces;
 using HsumChaint.Infrastructure.RepositoryInterfaces;
+using AutoMapper;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using HsumChaint.Infrastructure.Models;
 
 namespace HsumChaint.Application.Services
 {
     public class UserService : IUserService
     {
         private readonly IUserRepository _userRepository;
+        private readonly IMapper _mapper;
 
-        public UserService(IUserRepository userRepository)
+        public UserService(IUserRepository userRepository, IMapper mapper)
         {
             _userRepository = userRepository;
+            _mapper = mapper;
         }
 
         #region AddUser
@@ -22,14 +26,19 @@ namespace HsumChaint.Application.Services
             var response = new ApplicationCommonResponseModel<UserDto>();
             try
             {
-                var addResponse = await _userRepository.AddUser(new Infrastructure.Models.User
-                {
-                    Name = reqModel.Name,
-                    PhoneNumber = reqModel.PhoneNumber,
-                });
+                // Used AutoMapper to map UserDto to User entity
+                var userEntity = _mapper.Map<User>(reqModel);
+                var addResponse = await _userRepository.AddUser(userEntity);
+
+                // Without AutoMapper
+                //var addResponse = await _userRepository.AddUser(new Infrastructure.Models.User
+                //{
+                //    Name = reqModel.Name,
+                //    PhoneNumber = reqModel.PhoneNumber,
+                //});
 
                 response.IsSuccess = addResponse.IsSuccess;
-                response.Message = addResponse.Message; s
+                response.Message = addResponse.Message;
             }
             catch (Exception ex)
             {
