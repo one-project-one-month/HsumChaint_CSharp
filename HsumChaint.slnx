@@ -1,6 +1,7 @@
 <Solution>
   <Folder Name="/Solution Items/">
     <File Path=".gitignore" />
+    <File Path="README.md" />
   </Folder>
   <Project Path="HsumChaint.API/HsumChaint.API.csproj" Id="be5a77bd-e6e7-4111-b6ac-7577ea2ce4ec" />
   <Project Path="HsumChaint.Application/HsumChaint.Application.csproj" Id="d7a2b77f-d6ec-481d-9b3d-c0eea48ae5a5" />
